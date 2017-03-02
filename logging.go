@@ -3,6 +3,7 @@ package logging
 import (
 	"context"
 	"errors"
+	"io"
 )
 
 // ErrNotFound is returned when the log does not exist.
@@ -38,8 +39,8 @@ type Log interface {
 	// Close closes the log.
 	Close(c context.Context, path string) error
 
-	// Snapshot snapshots the stream to WriteCloser wc.
-	// Snapshot(c context.Context, wc io.WriteCloser) error
+	// Snapshot snapshots the stream to Writer w.
+	Snapshot(c context.Context, path string, w io.Writer) error
 
 	// Info returns runtime information about the multiplexer.
 	// Info(c context.Context) (interface{}, error)
@@ -72,4 +73,9 @@ func Tail(c context.Context, path string, handler Handler) error {
 // Close closes the log stream.
 func Close(c context.Context, path string) error {
 	return global.Close(c, path)
+}
+
+// Snapshot snapshots the stream to Writer w.
+func Snapshot(c context.Context, path string, w io.Writer) error {
+	return global.Snapshot(c, path, w)
 }

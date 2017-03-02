@@ -2,6 +2,7 @@ package logging
 
 import (
 	"context"
+	"io"
 	"sync"
 )
 
@@ -122,3 +123,21 @@ func (l *log) Close(c context.Context, path string) error {
 	l.Unlock()
 	return nil
 }
+
+func (l *log) Snapshot(c context.Context, path string, w io.Writer) error {
+	l.Lock()
+	s, ok := l.streams[path]
+	l.Unlock()
+	if !ok {
+		return ErrNotFound
+	}
+	s.Lock()
+	for _, entry := range s.hist {
+		w.Write(entry.Data)
+		w.Write(cr)
+	}
+	s.Unlock()
+	return nil
+}
+
+var cr = []byte{'\n'}
