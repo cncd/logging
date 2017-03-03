@@ -46,36 +46,35 @@ type Log interface {
 	// Info(c context.Context) (interface{}, error)
 }
 
-// global streamer
-// ... get over it
-var global = New()
-
-// Set sets a default global logger.
-func Set(log Log) {
-	global = log
-}
-
-// Open opens the log stream.
-func Open(c context.Context, path string) error {
-	return global.Open(c, path)
-}
-
-// Write writes the log entry to the stream.
-func Write(c context.Context, path string, entry *Entry) error {
-	return global.Write(c, path, entry)
-}
-
-// Tail tails the log stream.
-func Tail(c context.Context, path string, handler Handler) error {
-	return global.Tail(c, path, handler)
-}
-
-// Close closes the log stream.
-func Close(c context.Context, path string) error {
-	return global.Close(c, path)
-}
-
-// Snapshot snapshots the stream to Writer w.
-func Snapshot(c context.Context, path string, w io.Writer) error {
-	return global.Snapshot(c, path, w)
-}
+// // global streamer
+// var global = New()
+//
+// // Set sets a default global logger.
+// func Set(log Log) {
+// 	global = log
+// }
+//
+// // Open opens the log stream.
+// func Open(c context.Context, path string) error {
+// 	return global.Open(c, path)
+// }
+//
+// // Write writes the log entry to the stream.
+// func Write(c context.Context, path string, entry *Entry) error {
+// 	return global.Write(c, path, entry)
+// }
+//
+// // Tail tails the log stream.
+// func Tail(c context.Context, path string, handler Handler) error {
+// 	return global.Tail(c, path, handler)
+// }
+//
+// // Close closes the log stream.
+// func Close(c context.Context, path string) error {
+// 	return global.Close(c, path)
+// }
+//
+// // Snapshot snapshots the stream to Writer w.
+// func Snapshot(c context.Context, path string, w io.Writer) error {
+// 	return global.Snapshot(c, path, w)
+// }
