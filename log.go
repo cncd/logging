@@ -71,7 +71,7 @@ func (l *log) Write(c context.Context, path string, entry *Entry) error {
 	s.Lock()
 	s.hist = append(s.hist, entry)
 	for sub := range s.subs {
-		sub.handler(entry)
+		go sub.handler(entry)
 	}
 	s.Unlock()
 	return nil
